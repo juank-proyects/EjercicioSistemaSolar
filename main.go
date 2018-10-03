@@ -10,8 +10,8 @@ import (
 var ferengi models.Planet
 var betasoide models.Planet
 var vulcano models.Planet
-var dias = 3
-var anios = 1
+var dias = 365
+var anios = 10
 
 func main() {
 	ferengi.Radio = 500
