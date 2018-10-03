@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/juankis/SistemaSolar/src/models"
+	"github.com/juank-proyects/EjercicioSistemaSolar/src/models"
 )
 
 var ferengi models.Planet
 var betasoide models.Planet
 var vulcano models.Planet
-var dias int = 10
-var anios int = 1
+var dias = 3
+var anios = 1
 
 func main() {
 	ferengi.Radio = 500
@@ -38,22 +38,21 @@ func main() {
 	vulcano.Y = vulcano.Radio
 	vulcano.Grados = 0
 
-	//IsSunIn(ferengi, betasoide, vulcano)
 	MoveGalaxy()
 }
 
-//isSunIn dato 3 planetas calcula si el sol se encuentra en el medio
+//IsSunIn dato 3 planetas calcula si el sol se encuentra en el medio
 func IsSunIn(a models.Planet, b models.Planet, c models.Planet) bool {
 	var sol models.Planet
-	var res bool = false
+	var res = false
 	sol.X = 0
 	sol.Y = 0
 
-	var areaPlanetas float64 = GetArea(a, b, c)
-	var areaA float64 = GetArea(a, b, sol)
-	var areaB float64 = GetArea(a, c, sol)
-	var areaC float64 = GetArea(b, c, sol)
-	var areaABC float64 = areaA + areaB + areaC
+	var areaPlanetas = GetArea(a, b, c)
+	var areaA = GetArea(a, b, sol)
+	var areaB = GetArea(a, c, sol)
+	var areaC = GetArea(b, c, sol)
+	var areaABC = areaA + areaB + areaC
 	if areaABC == areaPlanetas {
 		res = true
 		fmt.Print("esta dentro\n")
@@ -64,12 +63,13 @@ func IsSunIn(a models.Planet, b models.Planet, c models.Planet) bool {
 	return res
 }
 
-//getArea obtiene el area de 3 puntos
+//GetArea obtiene el area de 3 puntos
 func GetArea(a models.Planet, b models.Planet, c models.Planet) float64 {
-	var area float64 = (a.X*(b.Y-c.Y) + b.X*(c.Y-a.Y) + c.X*(a.Y-b.Y)) / 2
+	var area = (a.X*(b.Y-c.Y) + b.X*(c.Y-a.Y) + c.X*(a.Y-b.Y)) / 2
 	return math.Abs(area)
 }
 
+//MoveGalaxy es la funcion que calcula el clima de los proximos N Dias
 func MoveGalaxy() {
 	cantDias := dias * anios
 	cantPeriodsRain := 0
@@ -88,6 +88,7 @@ func MoveGalaxy() {
 	fmt.Printf("cantidad temporadas de lluvia %v \n", cantPeriodsRain)
 }
 
+//UpdateUbications actualzia la ubicacion del los 3 planetas de la BD
 func UpdateUbications() {
 	ferengi = ferengi.UpdateDay()
 	betasoide = betasoide.UpdateDay()
