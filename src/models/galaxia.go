@@ -9,6 +9,7 @@ import (
 type Galaxia struct {
 	dias     int
 	planetas []Planet
+	sol      Planet
 }
 
 //Iniciar carga todos los planetas en la galaxia
@@ -19,6 +20,7 @@ func (g Galaxia) Iniciar() Galaxia {
 	g.planetas = append(g.planetas, ferengi)
 	g.planetas = append(g.planetas, betasoide)
 	g.planetas = append(g.planetas, vulcano)
+	g.sol = Planet{X: 500, Y: 0}
 	return g
 }
 
@@ -50,19 +52,15 @@ func (g Galaxia) ActualizarGalaxia(dias int) {
 
 //IsSunIn dato 3 planetas calcula si el sol se encuentra en el medio
 func (g Galaxia) IsSunIn() bool {
+	var res = false
 	a := g.planetas[0]
 	b := g.planetas[1]
 	c := g.planetas[2]
 
-	var sol Planet
-	var res = false
-	sol.X = 0
-	sol.Y = 0
-
 	var areaPlanetas = g.GetArea(a, b, c)
-	var areaA = g.GetArea(a, b, sol)
-	var areaB = g.GetArea(a, c, sol)
-	var areaC = g.GetArea(b, c, sol)
+	var areaA = g.GetArea(a, b, g.sol)
+	var areaB = g.GetArea(a, c, g.sol)
+	var areaC = g.GetArea(b, c, g.sol)
 	var areaABC = areaA + areaB + areaC
 	if areaABC == areaPlanetas {
 		res = true
