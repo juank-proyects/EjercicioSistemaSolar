@@ -20,7 +20,8 @@ func (g Galaxia) Iniciar() Galaxia {
 	g.planetas = append(g.planetas, ferengi)
 	g.planetas = append(g.planetas, betasoide)
 	g.planetas = append(g.planetas, vulcano)
-	g.sol = Planet{X: 500, Y: 0}
+	g.sol = Planet{X: 0, Y: 0}
+	g.dias = 100
 	return g
 }
 
@@ -29,14 +30,24 @@ func (g Galaxia) MoverGalaxia(anios int) {
 	cantDias := g.dias * anios
 	cantPeriodsRain := 0
 	lastRes := false
+	var periodo Periodo
 	for i := 0; i <= cantDias; i++ {
-		g.ActualizarGalaxia(i)
+		g = g.ActualizarGalaxia(i)
+		fmt.Printf("DIA: %v \n", i)
 		if g.IsSunIn() {
 			if !lastRes {
-				cantPeriodsRain++
+				periodo = Periodo{}
+				periodo.Inicio = i
 				lastRes = true
+				periodo.Lluvia = true
+			} else {
+				periodo.Fin = i
 			}
 		} else {
+			if lastRes {
+				cantPeriodsRain++
+				periodo.Imprimir()
+			}
 			lastRes = false
 		}
 	}
@@ -44,10 +55,11 @@ func (g Galaxia) MoverGalaxia(anios int) {
 }
 
 //ActualizarGalaxia actualzia la ubicacion del los 3 planetas de la BD
-func (g Galaxia) ActualizarGalaxia(dias int) {
+func (g Galaxia) ActualizarGalaxia(dias int) Galaxia {
 	for i := range g.planetas {
-		g.planetas[i].ActualizarUbicacion(dias)
+		g.planetas[i] = g.planetas[i].ActualizarUbicacion(dias)
 	}
+	return g
 }
 
 //IsSunIn dato 3 planetas calcula si el sol se encuentra en el medio
@@ -61,10 +73,13 @@ func (g Galaxia) IsSunIn() bool {
 	var areaA = g.GetArea(a, b, g.sol)
 	var areaB = g.GetArea(a, c, g.sol)
 	var areaC = g.GetArea(b, c, g.sol)
-	var areaABC = areaA + areaB + areaC
+	fmt.Printf("SIN REDONDEAR-ABC: %v areaPlanetas: %v \n", (areaA + areaB + areaC), areaPlanetas)
+	var areaABC = math.Round((areaA+areaB+areaC)*100) / 100
+	areaPlanetas = math.Round((areaPlanetas)*100) / 100
+	fmt.Printf("areaABC: %v areaPlanetas: %v \n", areaABC, areaPlanetas)
 	if areaABC == areaPlanetas {
 		res = true
-		fmt.Print("esta dentro\n")
+		fmt.Print("ESTA DENTRO\n")
 	} else {
 		fmt.Print("esta fuera\n")
 	}
@@ -75,5 +90,11 @@ func (g Galaxia) IsSunIn() bool {
 //GetArea obtiene el area de 3 puntos
 func (g Galaxia) GetArea(a Planet, b Planet, c Planet) float64 {
 	var area = (a.X*(b.Y-c.Y) + b.X*(c.Y-a.Y) + c.X*(a.Y-b.Y)) / 2
+	fmt.Print("Planetas\n")
+	fmt.Printf("%+v\n", a)
+	fmt.Printf("%+v\n", b)
+	fmt.Printf("%+v\n", c)
+	fmt.Printf("Area de los planetas %+v\n", area)
+	fmt.Print("Fin Planetas\n")
 	return math.Abs(area)
 }

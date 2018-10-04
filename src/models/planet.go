@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -16,10 +17,12 @@ type Planet struct {
 }
 
 //ActualizarUbicacion mueve un planeta
-func (p Planet) ActualizarUbicacion(dia int) {
+func (p Planet) ActualizarUbicacion(dia int) Planet {
 	angulo := p.GetAngulo(dia)
 	p.X = p.Radio * math.Cos(angulo)
 	p.Y = p.Radio * math.Sin(angulo)
+	fmt.Printf("%+v\n", p)
+	return p
 }
 
 //GetAngulo retorna el angulo en el que se encuentra el planeta
