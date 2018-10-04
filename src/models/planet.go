@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -16,24 +15,18 @@ type Planet struct {
 	Name               string
 }
 
-//UpdateDay mueve un planeta
-func (p Planet) UpdateDay(dia int) {
+//ActualizarUbicacion mueve un planeta
+func (p Planet) ActualizarUbicacion(dia int) {
+	angulo := p.GetAngulo(dia)
+	p.X = p.Radio * math.Cos(angulo)
+	p.Y = p.Radio * math.Sin(angulo)
+}
+
+//GetAngulo retorna el angulo en el que se encuentra el planeta
+func (p Planet) GetAngulo(dia int) float64 {
 	grados := (dia * p.VelocidadGradosDia) % 360
 	if !p.SentidoHorario {
 		grados = 360 - grados
 	}
-	res := (float64(grados) * math.Pi) / float64(180)
-	p.X = p.Radio * math.Cos(res) //499
-	p.Y = p.Radio * math.Sin(res) //8.7
-
-	fmt.Printf("%v ( %g ) => X = %v ; Y = %v \n", p.Name, res, p.X, p.Y)
-}
-
-//GetGrados retorna los grados en los que se encuentra el planeta
-func (p Planet) GetGrados() float64 {
-	res := p.Grados
-	if !p.SentidoHorario {
-		res = 360 - p.Grados
-	}
-	return res
+	return (float64(grados) * math.Pi) / float64(180)
 }
