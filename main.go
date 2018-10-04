@@ -10,8 +10,8 @@ import (
 var ferengi models.Planet
 var betasoide models.Planet
 var vulcano models.Planet
-var dias = 365
-var anios = 10
+var dias = 5
+var anios = 1
 
 func main() {
 	ferengi.Radio = 500
@@ -74,8 +74,8 @@ func MoveGalaxy() {
 	cantDias := dias * anios
 	cantPeriodsRain := 0
 	lastRes := false
-	for i := 1; i <= cantDias; i++ {
-		UpdateUbications()
+	for i := 0; i <= cantDias; i++ {
+		UpdateUbications(i)
 		if IsSunIn(ferengi, betasoide, vulcano) {
 			if !lastRes {
 				cantPeriodsRain++
@@ -89,8 +89,8 @@ func MoveGalaxy() {
 }
 
 //UpdateUbications actualzia la ubicacion del los 3 planetas de la BD
-func UpdateUbications() {
-	ferengi = ferengi.UpdateDay()
-	betasoide = betasoide.UpdateDay()
-	vulcano = vulcano.UpdateDay()
+func UpdateUbications(dias int) {
+	ferengi.UpdateDay(dias)
+	betasoide.UpdateDay(dias)
+	vulcano.UpdateDay(dias)
 }

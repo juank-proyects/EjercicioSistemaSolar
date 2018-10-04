@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -8,7 +9,7 @@ import (
 type Planet struct {
 	X                  float64
 	Y                  float64
-	VelocidadGradosDia float64
+	VelocidadGradosDia int
 	Grados             float64
 	Radio              float64
 	SentidoHorario     bool
@@ -16,19 +17,22 @@ type Planet struct {
 }
 
 //UpdateDay mueve un planeta
-func (p Planet) UpdateDay() Planet {
-	p.Grados = p.Grados + p.VelocidadGradosDia
-	p.Grados = (p.Grados * math.Pi) / 180
-	p.X = p.Radio * math.Cos(p.GetGrados()) //499
-	p.Y = p.Radio * math.Sin(p.GetGrados()) //8.7
-	//fmt.Printf("%v ( %g, %v ) => X = %v ; Y = %v \n", p.Name, p.Grados, math.Cos(p.Grados), p.X, p.Y)
-	return p
+func (p Planet) UpdateDay(dia int) {
+	grados := (dia * p.VelocidadGradosDia) % 360
+	if !p.SentidoHorario {
+		grados = 360 - grados
+	}
+	res := (float64(grados) * math.Pi) / float64(180)
+	p.X = p.Radio * math.Cos(res) //499
+	p.Y = p.Radio * math.Sin(res) //8.7
+
+	fmt.Printf("%v ( %g ) => X = %v ; Y = %v \n", p.Name, res, p.X, p.Y)
 }
 
 //GetGrados retorna los grados en los que se encuentra el planeta
 func (p Planet) GetGrados() float64 {
 	res := p.Grados
-	if p.SentidoHorario {
+	if !p.SentidoHorario {
 		res = 360 - p.Grados
 	}
 	return res
