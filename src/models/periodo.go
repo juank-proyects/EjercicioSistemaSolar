@@ -8,6 +8,7 @@ type Periodo struct {
 	Fin    int
 	Pico   int
 	Lluvia bool
+	Clima  string
 }
 
 //Imprimir imprime el periodo

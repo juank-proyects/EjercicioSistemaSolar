@@ -29,12 +29,12 @@ func (g Galaxia) Iniciar() Galaxia {
 func (g Galaxia) MoverGalaxia(anios int) {
 	cantDias := g.dias * anios
 	cantPeriodsRain := 0
-	lastRes := false
+	//lastRes := false
 	var periodo Periodo
 	for i := 0; i <= cantDias; i++ {
 		g = g.ActualizarGalaxia(i)
 		fmt.Printf("DIA: %v \n", i)
-		if g.IsSunIn() {
+		/*if g.IsSunIn() {
 			if !lastRes {
 				periodo = Periodo{}
 				periodo.Inicio = i
@@ -49,7 +49,10 @@ func (g Galaxia) MoverGalaxia(anios int) {
 				periodo.Imprimir()
 			}
 			lastRes = false
-		}
+		}*/
+		periodo = Periodo{}
+		periodo.Clima = g.CondicionesClima()
+		fmt.Printf("periodo %+v\n", periodo)
 	}
 	fmt.Printf("cantidad temporadas de lluvia %v \n", cantPeriodsRain)
 }
@@ -97,4 +100,17 @@ func (g Galaxia) GetArea(a Planet, b Planet, c Planet) float64 {
 	fmt.Printf("Area de los planetas %+v\n", area)
 	fmt.Print("Fin Planetas\n")
 	return math.Abs(area)
+}
+
+//CondicionesClima devuelve una cadena si las condiciones eran optimas o sequia
+func (g Galaxia) CondicionesClima() string {
+	var res string
+	if Alineados(g.planetas[0], g.planetas[1], g.planetas[2]) {
+		if Alineados(g.planetas[0], g.planetas[1], g.sol) {
+			res = "Sequia"
+		} else {
+			res = "Optimo"
+		}
+	}
+	return res
 }
