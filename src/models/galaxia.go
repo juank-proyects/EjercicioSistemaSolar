@@ -105,8 +105,9 @@ func (g Galaxia) GetArea(a Planet, b Planet, c Planet) float64 {
 //CondicionesClima devuelve una cadena si las condiciones eran optimas o sequia
 func (g Galaxia) CondicionesClima() string {
 	var res string
-	if Alineados(g.planetas[0], g.planetas[1], g.planetas[2]) {
-		if Alineados(g.planetas[0], g.planetas[1], g.sol) {
+	var calc Calculadora
+	if calc.Alineados(g.planetas[0], g.planetas[1], g.planetas[2]) {
+		if calc.Alineados(g.planetas[0], g.planetas[1], g.sol) {
 			res = "Sequia"
 		} else {
 			res = "Optimo"

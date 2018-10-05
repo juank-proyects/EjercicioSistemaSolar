@@ -17,7 +17,7 @@ func TestGetArea(t *testing.T) {
 
 	res := galaxia.GetArea(cases[0], cases[1], cases[2])
 	if res != 97 {
-		t.Errorf("GetArea was incorrect, got: %v, want: %v. ", res, 1)
+		t.Errorf("GetArea was incorrect, got: %v, want: %v. \n", res, 1)
 	}
 
 }
