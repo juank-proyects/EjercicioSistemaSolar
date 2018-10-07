@@ -21,40 +21,55 @@ func (g Galaxia) Iniciar() Galaxia {
 	g.planetas = append(g.planetas, betasoide)
 	g.planetas = append(g.planetas, vulcano)
 	g.sol = Planet{X: 0, Y: 0}
-	g.dias = 100
+	g.dias = 50
 	return g
 }
 
 //MoverGalaxia es la funcion que calcula el clima de los proximos N Dias
 func (g Galaxia) MoverGalaxia(anios int) {
 	cantDias := g.dias * anios
-	cantPeriodsRain := 0
-	//lastRes := false
-	var periodo Periodo
-	for i := 0; i <= cantDias; i++ {
-		g = g.ActualizarGalaxia(i)
+	var ultimoPeriodo Periodo
+	for i := 1; i <= cantDias; i++ {
+		var periodo Periodo
 		fmt.Printf("DIA: %v \n", i)
-		/*if g.IsSunIn() {
-			if !lastRes {
-				periodo = Periodo{}
-				periodo.Inicio = i
-				lastRes = true
-				periodo.Lluvia = true
-			} else {
-				periodo.Fin = i
-			}
-		} else {
-			if lastRes {
-				cantPeriodsRain++
-				periodo.Imprimir()
-			}
-			lastRes = false
-		}*/
-		periodo = Periodo{}
-		periodo.Clima = g.CondicionesClima()
-		fmt.Printf("periodo %+v\n", periodo)
+		periodo = g.ObtenerClima(periodo, i)
+		if periodo.Clima != ultimoPeriodo.Clima {
+			fmt.Printf("primer: %+v ultimo: %+v \n", periodo, ultimoPeriodo)
+			if ultimoPeriodo != (Periodo{})  {
+				ultimoPeriodo.Guardar()
+			}	
+			ultimoPeriodo = periodo
+			ultimoPeriodo.Inicio = i
+		} 
+		ultimoPeriodo.Fin = i
+		//fmt.Printf(" %+v \n", periodo)
 	}
-	fmt.Printf("cantidad temporadas de lluvia %v \n", cantPeriodsRain)
+	ultimoPeriodo.Guardar()
+	//fmt.Printf("cantidad temporadas de lluvia %v \n", cantPeriodsRain)
+}
+
+func (g Galaxia) ObtenerClima(p Periodo, dia int) Periodo {
+	g = g.ActualizarGalaxia(dia)
+	p = g.Alineacion(p, dia)
+	if p.Clima == "" {
+		fmt.Print("entro a triangulacion\n")
+		p = g.Triagulacion(p, dia)
+	}
+	return p	
+}
+
+func (g Galaxia) Alineacion(p Periodo, dias int) Periodo {
+	p.Clima = g.CondicionesClima()
+	return p
+}
+
+func (g Galaxia) Triagulacion(p Periodo, dias int) Periodo {
+	if g.IsSunIn() {
+		p.Clima = "Lluvia"
+	} else {
+		p.Clima = "Despejado"
+	}
+	return p
 }
 
 //ActualizarGalaxia actualzia la ubicacion del los 3 planetas de la BD
@@ -76,10 +91,10 @@ func (g Galaxia) IsSunIn() bool {
 	var areaA = g.GetArea(a, b, g.sol)
 	var areaB = g.GetArea(a, c, g.sol)
 	var areaC = g.GetArea(b, c, g.sol)
-	fmt.Printf("SIN REDONDEAR-ABC: %v areaPlanetas: %v \n", (areaA + areaB + areaC), areaPlanetas)
+//	fmt.Printf("SIN REDONDEAR-ABC: %v areaPlanetas: %v \n", (areaA + areaB + areaC), areaPlanetas)
 	var areaABC = math.Round((areaA+areaB+areaC)*100) / 100
 	areaPlanetas = math.Round((areaPlanetas)*100) / 100
-	fmt.Printf("areaABC: %v areaPlanetas: %v \n", areaABC, areaPlanetas)
+	//fmt.Printf("areaABC: %v areaPlanetas: %v \n", areaABC, areaPlanetas)
 	if areaABC == areaPlanetas {
 		res = true
 		fmt.Print("ESTA DENTRO\n")
@@ -93,18 +108,18 @@ func (g Galaxia) IsSunIn() bool {
 //GetArea obtiene el area de 3 puntos
 func (g Galaxia) GetArea(a Planet, b Planet, c Planet) float64 {
 	var area = (a.X*(b.Y-c.Y) + b.X*(c.Y-a.Y) + c.X*(a.Y-b.Y)) / 2
-	fmt.Print("Planetas\n")
+	/*fmt.Print("Planetas\n")
 	fmt.Printf("%+v\n", a)
 	fmt.Printf("%+v\n", b)
 	fmt.Printf("%+v\n", c)
 	fmt.Printf("Area de los planetas %+v\n", area)
-	fmt.Print("Fin Planetas\n")
+	fmt.Print("Fin Planetas\n")*/
 	return math.Abs(area)
 }
 
 //CondicionesClima devuelve una cadena si las condiciones eran optimas o sequia
 func (g Galaxia) CondicionesClima() string {
-	var res string
+	res := ""
 	var calc Calculadora
 	if calc.Alineados(g.planetas[0], g.planetas[1], g.planetas[2]) {
 		if calc.Alineados(g.planetas[0], g.planetas[1], g.sol) {

@@ -7,11 +7,15 @@ type Periodo struct {
 	Inicio int
 	Fin    int
 	Pico   int
-	Lluvia bool
 	Clima  string
 }
 
 //Imprimir imprime el periodo
 func (p Periodo) Imprimir() {
-	fmt.Printf("%+v\n", p)
+	fmt.Printf("Guardado\n %+v\n", p)
+}
+
+//Guardar guarda el periodo en l BD
+func (p Periodo) Guardar() {
+	p.Imprimir()
 }
