@@ -21,10 +21,10 @@ func TestGuardar(t *testing.T) {
 	}
 }
 
-func TestObtenerClima(t *testing.T) {
+func TestObtenerPeriodo(t *testing.T) {
 	periodo := models.Periodo{}
 	noEsperado := models.Periodo{}
-	resultado := periodo.ObtenerClima(1)
+	resultado := periodo.ObtenerPeriodo(1)
 	if resultado == noEsperado {
 		t.Errorf("TestGuardar was incorrect, got: %v, want: %v. \n", resultado, noEsperado)
 	}

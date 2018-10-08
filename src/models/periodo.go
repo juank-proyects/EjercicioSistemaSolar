@@ -34,7 +34,7 @@ func (p Periodo) Guardar() string {
 }
 
 //Se guardar un periodo
-func (p Periodo) ObtenerClima(dia int) Periodo {
+func (p Periodo) ObtenerPeriodo(dia int) Periodo {
 	db := db.Connect()
 	defer db.Close()
 	err := db.Model(&p).
