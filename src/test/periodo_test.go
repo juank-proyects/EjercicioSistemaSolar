@@ -20,3 +20,12 @@ func TestGuardar(t *testing.T) {
 		t.Errorf("TestGuardar was incorrect, got: %v, want: %v. \n", resultado, esperado)
 	}
 }
+
+func TestObtenerClima(t *testing.T) {
+	periodo := models.Periodo{}
+	noEsperado := models.Periodo{}
+	resultado := periodo.ObtenerClima(1)
+	if resultado == noEsperado {
+		t.Errorf("TestGuardar was incorrect, got: %v, want: %v. \n", resultado, noEsperado)
+	}
+}
