@@ -7,10 +7,10 @@ import (
 )
 
 func TestGetArea(t *testing.T) {
-	var cases = []models.Planet{
-		models.Planet{X: 1, Y: 1},
-		models.Planet{X: 2, Y: 3},
-		models.Planet{X: 100, Y: 5},
+	var cases = []models.Planeta{
+		models.Planeta{X: 1, Y: 1},
+		models.Planeta{X: 2, Y: 3},
+		models.Planeta{X: 100, Y: 5},
 	}
 
 	var galaxia models.Galaxia
@@ -19,5 +19,4 @@ func TestGetArea(t *testing.T) {
 	if res != 97 {
 		t.Errorf("GetArea was incorrect, got: %v, want: %v. \n", res, 1)
 	}
-
 }

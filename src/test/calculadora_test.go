@@ -7,10 +7,10 @@ import (
 )
 
 func TestAlineados(t *testing.T) {
-	var cases = []models.Planet{
-		models.Planet{X: -1.18, Y: 3.28},
-		models.Planet{X: 1.03, Y: 1.16},
-		models.Planet{X: 2.75, Y: -0.49},
+	var cases = []models.Planeta{
+		models.Planeta{X: -1.18, Y: 3.28},
+		models.Planeta{X: 1.03, Y: 1.16},
+		models.Planeta{X: 2.75, Y: -0.49},
 	}
 	var calc models.Calculadora
 	res := calc.Alineados(cases[0], cases[1], cases[2])

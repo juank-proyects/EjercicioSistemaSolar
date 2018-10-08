@@ -10,7 +10,7 @@ type Calculadora struct {
 }
 
 //Alineados calcula si 3 planetas estan alineados
-func (calc Calculadora) Alineados(a, b, c Planet) bool {
+func (calc Calculadora) Alineados(a, b, c Planeta) bool {
 	res := false
 	if (a.X == b.X && b.X == c.X) || (a.Y == b.Y && b.Y == c.Y) {
 		res = true

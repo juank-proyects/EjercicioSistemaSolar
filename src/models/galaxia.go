@@ -8,19 +8,19 @@ import (
 //Galaxia es la estructura de un Galaxia
 type Galaxia struct {
 	dias     int
-	planetas []Planet
-	sol      Planet
+	planetas []Planeta
+	sol      Planeta
 }
 
 //Iniciar carga todos los planetas en la galaxia
 func (g Galaxia) Iniciar() Galaxia {
-	ferengi := Planet{Radio: 500, VelocidadGradosDia: 1, SentidoHorario: true, Name: "ferengi", X: 500, Y: 0, Grados: 0}
-	betasoide := Planet{Radio: 2000, VelocidadGradosDia: 3, SentidoHorario: true, Name: "betasoide", X: 200, Y: 0, Grados: 0}
-	vulcano := Planet{Radio: 1000, VelocidadGradosDia: 5, SentidoHorario: false, Name: "vulcano", X: 500, Y: 0, Grados: 0}
+	ferengi := Planeta{Radio: 500, VelocidadGradosDia: 1, SentidoHorario: true, Name: "ferengi", X: 500, Y: 0, Grados: 0}
+	betasoide := Planeta{Radio: 2000, VelocidadGradosDia: 3, SentidoHorario: true, Name: "betasoide", X: 200, Y: 0, Grados: 0}
+	vulcano := Planeta{Radio: 1000, VelocidadGradosDia: 5, SentidoHorario: false, Name: "vulcano", X: 500, Y: 0, Grados: 0}
 	g.planetas = append(g.planetas, ferengi)
 	g.planetas = append(g.planetas, betasoide)
 	g.planetas = append(g.planetas, vulcano)
-	g.sol = Planet{X: 0, Y: 0}
+	g.sol = Planeta{X: 0, Y: 0}
 	g.dias = 50
 	return g
 }
@@ -106,7 +106,7 @@ func (g Galaxia) IsSunIn() bool {
 }
 
 //GetArea obtiene el area de 3 puntos
-func (g Galaxia) GetArea(a Planet, b Planet, c Planet) float64 {
+func (g Galaxia) GetArea(a Planeta, b Planeta, c Planeta) float64 {
 	var area = (a.X*(b.Y-c.Y) + b.X*(c.Y-a.Y) + c.X*(a.Y-b.Y)) / 2
 	/*fmt.Print("Planetas\n")
 	fmt.Printf("%+v\n", a)

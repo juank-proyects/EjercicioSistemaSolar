@@ -4,9 +4,9 @@ import (
 	"github.com/juank-proyects/EjercicioSistemaSolar/src/models"
 )
 
-var ferengi models.Planet
-var betasoide models.Planet
-var vulcano models.Planet
+var ferengi models.Planeta
+var betasoide models.Planeta
+var vulcano models.Planeta
 var anios = 1
 
 func main() {
