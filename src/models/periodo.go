@@ -2,18 +2,18 @@ package models
 
 import (
 	"fmt"
-	
+
 	"github.com/juank-proyects/EjercicioSistemaSolar/src/db"
-)	
+)
 
 //Periodo es la estructura de un periodo de tiempo
 type Periodo struct {
 	tableName struct{} `sql:"periodo"`
-	Id 	   int `sql:",pk"`
-	Inicio int `sql:"inicio"`
-	Fin    int
-	Pico   int
-	Clima  string
+	Id        int      `sql:",pk"`
+	Inicio    int      `sql:"inicio"`
+	Fin       int
+	Pico      int
+	Clima     string
 }
 
 //Imprimir imprime el periodo
@@ -37,16 +37,12 @@ func (p Periodo) Guardar() string {
 func (p Periodo) ObtenerPeriodo(dia int) Periodo {
 	db := db.Connect()
 	defer db.Close()
-	err := db.Model(&p).
+	db.Model(&p).
 		Column("clima").
 		Where("inicio >= ?", dia).
 		Where("inicio <= ?", dia).
 		Limit(1).
 		Returning("clima").
 		Select()
-	if err != nil {
-		panic(err)
-	} else {
-		return p
-	}
+	return p
 }
