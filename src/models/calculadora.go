@@ -15,7 +15,7 @@ func (calc Calculadora) Alineados(a, b, c Planeta) bool {
 	if (a.X == b.X && b.X == c.X) || (a.Y == b.Y && b.Y == c.Y) {
 		res = true
 	} else {
-		res =  calc.CalcularDentroDeRango( calc.Vector(a.X, b.X, c.X), calc.Vector(a.Y, b.Y, c.Y) )
+		res = calc.CalcularDentroDeRango(calc.Vector(a.X, b.X, c.X), calc.Vector(a.Y, b.Y, c.Y))
 	}
 	return res
 }
@@ -28,10 +28,12 @@ func (calc Calculadora) Vector(a, b, c float64) float64 {
 	return res
 }
 
+//Redondear funcion que redondea los valores a 2 decimales
 func (calc Calculadora) Redondear(num float64) float64 {
 	return math.Round((num)*100) / 100
 }
 
+//CalcularDentroDeRango funcion que calcula si la diferencia de 2 numeros son mayores a un X
 func (calc Calculadora) CalcularDentroDeRango(a, b float64) bool {
-	return math.Abs ( math.Abs(a) - math.Abs(b) ) < 0.05
+	return math.Abs(math.Abs(a)-math.Abs(b)) < 0.05
 }

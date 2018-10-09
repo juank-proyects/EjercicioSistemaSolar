@@ -52,11 +52,11 @@ func (g Galaxia) MoverGalaxia() string {
 	cant, err := ultimoPeriodo.CantidadPeriodos()
 	if err != nil {
 		return err.Error()
-	} else {
-		return "Se calcularon " + strconv.Itoa(cant) + " nuevos periodos"
 	}
+	return "Se calcularon " + strconv.Itoa(cant) + " nuevos periodos"
 }
 
+//ObtenerClima funcion para obtener el clima de determinado dia
 func (g Galaxia) ObtenerClima(p Periodo, dia int) Periodo {
 	g = g.ActualizarGalaxia(dia)
 	p = g.Alineacion(p, dia)
@@ -67,11 +67,13 @@ func (g Galaxia) ObtenerClima(p Periodo, dia int) Periodo {
 	return p
 }
 
+//Alineacion funcion que calcula si los planetas dentro la galaxia estan alineados
 func (g Galaxia) Alineacion(p Periodo, dias int) Periodo {
 	p.Clima = g.CondicionesClima()
 	return p
 }
 
+//Triagulacion funcion que calcula si los planetas estan formando una triangulacion
 func (g Galaxia) Triagulacion(p Periodo, dias int) Periodo {
 	if g.IsSunIn() {
 		p.Clima = "Lluvia"

@@ -30,9 +30,9 @@ func (p Periodo) Guardar() string {
 	err := db.Insert(&p)
 	if err != nil {
 		return ("Error inserting: " + err.Error())
-	} else {
-		return "1"
 	}
+	return "1"
+
 }
 
 //ObtenerPeriodo obtiene el perido para el dia X
