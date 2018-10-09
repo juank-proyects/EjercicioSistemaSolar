@@ -41,8 +41,8 @@ func (p Periodo) ObtenerPeriodo(dia int) Periodo {
 	defer db.Close()
 	db.Model(&p).
 		Column("clima").
-		Where("inicio >= ?", dia).
 		Where("inicio <= ?", dia).
+		Where("fin >= ?", dia).
 		Limit(1).
 		Returning("clima").
 		Select()
