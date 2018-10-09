@@ -10,7 +10,7 @@ func Connect() *pg.DB {
 		Addr:     "localhost:5432",
 		User:     "postgres",
 		Password: "postgres",
-		Database: "algo",
+		Database: "clima",
 	})
 	return db
 }
