@@ -16,6 +16,7 @@ Ejercicio Sistema Solar, dado 3 planetas que se mueven al rededor del sol, calcu
 - Para ejecutar el cronjob Manualmente 
    http://ec2-18-191-229-56.us-east-2.compute.amazonaws.com:8080/mover_galaxia
 # Instalacion
+- (Se requiere tener instalado go1.11.1 o superior)
 - go get github.com/go-pg/pg
 - go get github.com/gin-gonic/gin
 - go get github.com/juank-proyects/EjercicioSistemaSolar
