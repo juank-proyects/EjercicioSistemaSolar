@@ -6,7 +6,7 @@ Ejercicio Sistema Solar, dado 3 planetas que se mueven al rededor del sol, calcu
 # Api Demo en AWS
 * El proyecto esta deployado en Amazon, junto con una BD en Postgres en el cual se responden a las preguntas planteadas en el encunciado del problema:
 - 1 ¿Cuántos períodos de sequía habrá? <br />
-   http://ec2-18-191-229-56.us-east-2.compute.amazonaws.com:8080/periodos_de_sequia
+   http://ec2-18-191-229-56.us-east-2.compute.amazonaws.com:8080/periodos_sequia
 - 2 ¿Cuántos períodos de lluvia habrá y qué día será el pico máximo de lluvia? <br />
    http://ec2-18-191-229-56.us-east-2.compute.amazonaws.com:8080/periodos_de_lluvia
 - 3 ¿Cuántos períodos de condiciones óptimas de presión y temperatura habrá? <br />
@@ -38,8 +38,8 @@ tambien es posible modificar estas configuraciones en EjercicioSistemaSolar/src/
   
 - Finalmente para crear las tablas correspondientes en la BD y ejecutar manualmente el Job correr los siguientes request: <br />
 ```sh
-   localhost:9990/crear_esquema
-   localhost:9990/mover_galaxia
+   localhost:8080/crear_esquema
+   localhost:8080/mover_galaxia
 ```
 # Test
 - Dentro del folder EjercicioSistemaSolar/src/test/ correr en la consola:
