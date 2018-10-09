@@ -37,9 +37,10 @@ tambien es posible modificar estas configuraciones en EjercicioSistemaSolar/src/
 ```
   
 - Finalmente para crear las tablas correspondientes en la BD y ejecutar manualmente el Job correr los siguientes request: <br />
-- [localhost:9990/crear_esquema](9990/crear_esquema) <br />
-- [localhost:9990/mover_galaxia](9990/mover_galaxia) <br />
-
+```sh
+   localhost:9990/crear_esquema
+   localhost:9990/mover_galaxia
+```
 # Test
 - Dentro del folder EjercicioSistemaSolar/src/test/ correr en la consola:
 ```sh
