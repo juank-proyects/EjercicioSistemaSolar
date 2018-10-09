@@ -24,7 +24,7 @@ func (g Galaxia) Iniciar() Galaxia {
 	g.planetas = append(g.planetas, vulcano)
 	g.sol = Planeta{X: 0, Y: 0}
 	g.dias = 50
-	g.anios = 10
+	g.anios = 1
 	return g
 }
 
@@ -77,6 +77,11 @@ func (g Galaxia) Alineacion(p Periodo, dias int) Periodo {
 func (g Galaxia) Triagulacion(p Periodo, dias int) Periodo {
 	if g.IsSunIn() {
 		p.Clima = "Lluvia"
+		perimetro := g.GetPerimetro()
+		if perimetro > p.Perimetro {
+			p.Pico = dias
+			p.Perimetro = perimetro
+		}
 	} else {
 		p.Clima = "Despejado"
 	}
@@ -140,4 +145,17 @@ func (g Galaxia) CondicionesClima() string {
 		}
 	}
 	return res
+}
+
+// Distancia entre 2 puntos
+func (g Galaxia) Distancia(a, b Planeta) float64 {
+	return math.Sqrt(math.Pow(b.X-a.X, 2) + math.Pow(b.Y-a.Y, 2))
+}
+
+//GetPerimetro obtener perimetro de un triangulo
+func (g Galaxia) GetPerimetro() float64 {
+	a := g.planetas[0]
+	b := g.planetas[1]
+	c := g.planetas[2]
+	return (g.Distancia(a, b) + g.Distancia(b, c) + g.Distancia(c, a))
 }

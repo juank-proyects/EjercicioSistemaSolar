@@ -14,7 +14,7 @@ type Periodo struct {
 	Inicio    int      `sql:"inicio"`
 	Fin       int
 	Pico      int
-	Perimetro float32
+	Perimetro float64
 	Clima     string
 }
 
@@ -91,8 +91,9 @@ func (p Periodo) PicoMaximoLluvia() (int, error) {
 	db := db.Connect()
 	defer db.Close()
 	var periodo Periodo
-	err := db.Model(periodo).Where("Clima = ?", "Lluvia").Order("perimetro ASC").Limit(1).Select()
+	err := db.Model(&periodo).Where("clima = ?", "Lluvia").Order("perimetro DESC").Limit(1).Select()
 	if err != nil {
+		fmt.Printf("error en PicoMaximoLluvia %v\n", err.Error())
 		return 0, err
 	}
 	return periodo.Pico, nil

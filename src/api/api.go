@@ -44,16 +44,6 @@ func clima(c *gin.Context) {
 	return
 }
 
-func moverGalaxia(c *gin.Context) {
-	var galaxia models.Galaxia
-	galaxia = galaxia.Iniciar()
-	res := galaxia.MoverGalaxia()
-	c.JSON(200, gin.H{
-		"resultado": res,
-	})
-	return
-}
-
 func ejecutarMoverGalaxia(c *gin.Context) {
 	var galaxia models.Galaxia
 	galaxia = galaxia.Iniciar()
