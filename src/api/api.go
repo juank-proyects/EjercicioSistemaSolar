@@ -10,12 +10,13 @@ import (
 func Start() {
 
 	router := gin.Default()
-	router.GET("/clima", handleStats)
+	router.GET("/clima", clima)
+	router.GET("/mover_galaxia", moverGalaxia)
 	router.Run(":9990")
 
 }
 
-func handleStats(c *gin.Context) {
+func clima(c *gin.Context) {
 	dia := c.Query("dia")
 	i, err := strconv.Atoi(dia)
 	if err != nil {
@@ -35,6 +36,16 @@ func handleStats(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"dia":   dia,
 		"clima": periodo.Clima,
+	})
+	return
+}
+
+func moverGalaxia(c *gin.Context) {
+	var galaxia models.Galaxia
+	galaxia = galaxia.Iniciar()
+	res := galaxia.MoverGalaxia()
+	c.JSON(200, gin.H{
+		"resultado": res,
 	})
 	return
 }

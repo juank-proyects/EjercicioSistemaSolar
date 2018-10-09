@@ -46,3 +46,26 @@ func (p Periodo) ObtenerPeriodo(dia int) Periodo {
 		Select()
 	return p
 }
+
+//Se guardar un periodo
+func (p Periodo) CantidadPeriodos() (int, error) {
+	db := db.Connect()
+	defer db.Close()
+	count, err := db.Model(&Periodo{}).Count()
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
+func (p Periodo) EliminarPeriodos() int {
+	db := db.Connect()
+	defer db.Close()
+	query := "DELETE FROM periodo"
+	res, err := db.Exec(query)
+	if err != nil {
+		fmt.Printf("%v\n", err.Error())
+	}
+	fmt.Printf("filas afetadas %v\n", res.RowsAffected())
+	return res.RowsAffected()
+}

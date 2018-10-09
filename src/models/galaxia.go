@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 //Galaxia es la estructura de un Galaxia
@@ -10,6 +11,7 @@ type Galaxia struct {
 	dias     int
 	planetas []Planeta
 	sol      Planeta
+	anios    int
 }
 
 //Iniciar carga todos los planetas en la galaxia
@@ -22,30 +24,37 @@ func (g Galaxia) Iniciar() Galaxia {
 	g.planetas = append(g.planetas, vulcano)
 	g.sol = Planeta{X: 0, Y: 0}
 	g.dias = 50
+	g.anios = 10
 	return g
 }
 
 //MoverGalaxia es la funcion que calcula el clima de los proximos N Dias
-func (g Galaxia) MoverGalaxia(anios int) {
-	cantDias := g.dias * anios
+func (g Galaxia) MoverGalaxia() string {
+	cantDias := g.dias * g.anios
 	var ultimoPeriodo Periodo
+	ultimoPeriodo.EliminarPeriodos() //Limpiamos la BD
 	for i := 1; i <= cantDias; i++ {
 		var periodo Periodo
 		fmt.Printf("DIA: %v \n", i)
 		periodo = g.ObtenerClima(periodo, i)
 		if periodo.Clima != ultimoPeriodo.Clima {
 			fmt.Printf("primer: %+v ultimo: %+v \n", periodo, ultimoPeriodo)
-			if ultimoPeriodo != (Periodo{})  {
+			if ultimoPeriodo != (Periodo{}) {
 				ultimoPeriodo.Guardar()
-			}	
+			}
 			ultimoPeriodo = periodo
 			ultimoPeriodo.Inicio = i
-		} 
+		}
 		ultimoPeriodo.Fin = i
 		//fmt.Printf(" %+v \n", periodo)
 	}
 	ultimoPeriodo.Guardar()
-	//fmt.Printf("cantidad temporadas de lluvia %v \n", cantPeriodsRain)
+	cant, err := ultimoPeriodo.CantidadPeriodos()
+	if err != nil {
+		return err.Error()
+	} else {
+		return "Se calcularon " + strconv.Itoa(cant) + " nuevos periodos"
+	}
 }
 
 func (g Galaxia) ObtenerClima(p Periodo, dia int) Periodo {
@@ -55,7 +64,7 @@ func (g Galaxia) ObtenerClima(p Periodo, dia int) Periodo {
 		fmt.Print("entro a triangulacion\n")
 		p = g.Triagulacion(p, dia)
 	}
-	return p	
+	return p
 }
 
 func (g Galaxia) Alineacion(p Periodo, dias int) Periodo {
@@ -91,7 +100,7 @@ func (g Galaxia) IsSunIn() bool {
 	var areaA = g.GetArea(a, b, g.sol)
 	var areaB = g.GetArea(a, c, g.sol)
 	var areaC = g.GetArea(b, c, g.sol)
-//	fmt.Printf("SIN REDONDEAR-ABC: %v areaPlanetas: %v \n", (areaA + areaB + areaC), areaPlanetas)
+	//	fmt.Printf("SIN REDONDEAR-ABC: %v areaPlanetas: %v \n", (areaA + areaB + areaC), areaPlanetas)
 	var areaABC = math.Round((areaA+areaB+areaC)*100) / 100
 	areaPlanetas = math.Round((areaPlanetas)*100) / 100
 	//fmt.Printf("areaABC: %v areaPlanetas: %v \n", areaABC, areaPlanetas)
