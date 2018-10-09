@@ -12,6 +12,7 @@ func Start() {
 	router := gin.Default()
 	router.GET("/clima", clima)
 	router.GET("/mover_galaxia", moverGalaxia)
+	router.GET("/periodos_de_lluvia", periodosDeLluvia)
 	router.Run(":9990")
 
 }
@@ -46,6 +47,27 @@ func moverGalaxia(c *gin.Context) {
 	res := galaxia.MoverGalaxia()
 	c.JSON(200, gin.H{
 		"resultado": res,
+	})
+	return
+}
+
+func moverGalaxia(c *gin.Context) {
+	var galaxia models.Galaxia
+	galaxia = galaxia.Iniciar()
+	res := galaxia.MoverGalaxia()
+	c.JSON(200, gin.H{
+		"resultado": res,
+	})
+	return
+}
+
+func periodosDeLluvia(c *gin.Context) {
+	var periodo models.Periodo
+	cantidad, err := periodo.CantidadPeriodosClima("Lluvia")
+	dia, err := periodo.PicoMaximoLluvia()
+	c.JSON(200, gin.H{
+		"cantidad":    cantidad,
+		"pico_maximo": dia,
 	})
 	return
 }

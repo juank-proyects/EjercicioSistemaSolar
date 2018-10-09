@@ -69,3 +69,26 @@ func (p Periodo) EliminarPeriodos() int {
 	fmt.Printf("filas afetadas %v\n", res.RowsAffected())
 	return res.RowsAffected()
 }
+
+func (p Periodo) CantidadPeriodosClima(clima string) (int, error) {
+	db := db.Connect()
+	defer db.Close()
+	cantidad, err := db.Model(&p).
+		Where("clima = ?", clima).
+		Count()
+	if err != nil {
+		return 0, err
+	}
+	return cantidad, nil
+}
+
+func (p Periodo) PicoMaximoLluvia() (int, error) {
+	db := db.Connect()
+	defer db.Close()
+	var periodo Periodo
+	err := db.Model(periodo).Where("Clima = ?", "Lluvia").Order("perimetro ASC").Limit(1).Select()
+	if err != nil {
+		return 0, err
+	}
+	return periodo.Pico, nil
+}
