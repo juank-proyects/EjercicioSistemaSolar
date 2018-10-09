@@ -16,6 +16,7 @@ func Start() {
 	router.GET("/periodos_optimos", periodosOptimos)
 	router.GET("/periodos_sequia", periodosSequia)
 	router.GET("/periodos_despejado", periodosDespejado)
+	router.GET("/crear_esquema", crearEsquema)
 	router.Run(":9000")
 }
 
@@ -102,6 +103,19 @@ func periodosClima(c *gin.Context, clima string) {
 	}
 	c.JSON(200, gin.H{
 		"cantidad": cantidad,
+	})
+	return
+}
+
+func crearEsquema(c *gin.Context) {
+	var periodo models.Periodo
+	err := periodo.CrearEsquema()
+	if err != nil {
+		c.String(400, "400-Bad-Request")
+		return
+	}
+	c.JSON(200, gin.H{
+		"res": "El esquema se ha creado correctamente",
 	})
 	return
 }

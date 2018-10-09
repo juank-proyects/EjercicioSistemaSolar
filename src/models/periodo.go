@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 
+	"github.com/go-pg/pg/orm"
 	"github.com/juank-proyects/EjercicioSistemaSolar/src/db"
 )
 
@@ -95,4 +96,34 @@ func (p Periodo) PicoMaximoLluvia() (int, error) {
 		return 0, err
 	}
 	return periodo.Pico, nil
+}
+
+//CrearEsquema se crea el esquema Periodos
+func (p Periodo) CrearEsquema() error {
+	p.EliminarTablas()
+	db := db.Connect()
+	defer db.Close()
+	err := db.CreateTable(&p, &orm.CreateTableOptions{
+		Temp:          false, // create temp table
+		FKConstraints: true,
+	})
+	if err != nil {
+		fmt.Printf("error en creacion de tablas %v\n", err.Error())
+		return err
+	}
+	return nil
+}
+
+//EliminarTablas se eliminan las tablas de la BD
+func (p Periodo) EliminarTablas() error {
+	db := db.Connect()
+	defer db.Close()
+	query := "DROP TABLE IF EXISTS periodos"
+	res, err := db.Exec(query)
+	if err != nil {
+		fmt.Printf("error en eliminaciond de tablas %v\n", err.Error())
+		return err
+	}
+	fmt.Printf("filas afetadas %v\n", res.RowsAffected())
+	return nil
 }

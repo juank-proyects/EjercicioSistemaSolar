@@ -1,6 +1,8 @@
 package db
 
-import "github.com/go-pg/pg"
+import (
+	"github.com/go-pg/pg"
+)
 
 //Connect funcion para conectarse a la BD
 func Connect() *pg.DB {
@@ -8,7 +10,7 @@ func Connect() *pg.DB {
 		Addr:     "localhost:5432",
 		User:     "postgres",
 		Password: "postgres",
-		Database: "clima",
+		Database: "algo",
 	})
 	return db
 }
