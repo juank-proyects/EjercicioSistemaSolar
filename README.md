@@ -3,7 +3,7 @@ Ejercicio Sistema Solar, dado 3 planetas que se mueven al rededor del sol, calcu
 # Documentacion
 * La Documentacion se encuentra en el siguiente [enlace](https://docs.google.com/document/d/1hUhcSEUILK8SX_d8FT5Otsfzxt5GCJYm9hW94ZpxWuQ/edit#heading=h.kk1966kbedef)
 * Las tareas del proyecto se encuentran en el siguiente [enlace](https://github.com/juank-proyects/EjercicioSistemaSolar/projects/1)
-# Api
+# Api Demo en AWS
 * El proyecto esta deployado en Amazon, junto con una BD en Postgres en el cual se responden a las preguntas planteadas en el encunciado del problema:
 - 1 ¿Cuántos períodos de sequía habrá? <br />
    http://ec2-18-191-229-56.us-east-2.compute.amazonaws.com:8080/periodos_de_sequia
@@ -17,9 +17,31 @@ Ejercicio Sistema Solar, dado 3 planetas que se mueven al rededor del sol, calcu
    http://ec2-18-191-229-56.us-east-2.compute.amazonaws.com:8080/mover_galaxia
 # Instalacion
 - (Se requiere tener instalado go1.11.1 o superior)
-- go get github.com/go-pg/pg
-- go get github.com/gin-gonic/gin
-- go get github.com/juank-proyects/EjercicioSistemaSolar
-- Dentro del folder EjercicioSistemaSolar correr en la consola: go run main.go
+```sh
+      go get github.com/go-pg/pg
+      go get github.com/gin-gonic/gin
+      go get github.com/juank-proyects/EjercicioSistemaSolar
+```
+- Para levantar la Api del proyecto en localhost:9990 ejecutar: 
+```sh
+      go run main.go 
+```
+- Crear una BD en postgres con los siguiente datos: <br />
+
+
+```go
+      Addr:     "localhost:5432",
+      User:     "postgres",
+      Password: "postgres",
+      Database: "clima",
+```
+  O tambien es posible modificar estas configuraciones en EjercicioSistemaSolar/src/db/db.go
+- Finalmente para crear las tablas correspondientes en la BD y ejecutar manualmente el Job correr los siguientes request: <br />
+- [localhost:9990/crear_esquema](9990/crear_esquema) <br />
+- [localhost:9990/mover_galaxia](9990/mover_galaxia) <br />
+
 # Test
-- Dentro del folder EjercicioSistemaSolar/src/test/ correr en la consola: go test
+- Dentro del folder EjercicioSistemaSolar/src/test/ correr en la consola:
+```sh
+   go test
+```
