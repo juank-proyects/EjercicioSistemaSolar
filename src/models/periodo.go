@@ -91,7 +91,7 @@ func (p Periodo) PicoMaximoLluvia() (int, error) {
 	db := db.Connect()
 	defer db.Close()
 	var periodo Periodo
-	err := db.Model(&periodo).Where("clima = ?", "Lluvia").Order("perimetro DESC").Limit(1).Select()
+	err := db.Model(&periodo).Where("clima = ?", "Lluvia").Order("perimetro DESC").Order("pico").Limit(1).Select()
 	if err != nil {
 		fmt.Printf("error en PicoMaximoLluvia %v\n", err.Error())
 		return 0, err

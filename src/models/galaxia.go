@@ -23,8 +23,8 @@ func (g Galaxia) Iniciar() Galaxia {
 	g.planetas = append(g.planetas, betasoide)
 	g.planetas = append(g.planetas, vulcano)
 	g.sol = Planeta{X: 0, Y: 0}
-	g.dias = 50
-	g.anios = 1
+	g.dias = 365
+	g.anios = 10
 	return g
 }
 
