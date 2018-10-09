@@ -27,7 +27,7 @@ Ejercicio Sistema Solar, dado 3 planetas que se mueven al rededor del sol, calcu
       go run main.go 
 ```
 - Crear una BD en postgres con los siguiente datos: <br />
-
+tambien es posible modificar estas configuraciones en EjercicioSistemaSolar/src/db/db.go
 
 ```go
       Addr:     "localhost:5432",
@@ -35,7 +35,7 @@ Ejercicio Sistema Solar, dado 3 planetas que se mueven al rededor del sol, calcu
       Password: "postgres",
       Database: "clima",
 ```
-  O tambien es posible modificar estas configuraciones en EjercicioSistemaSolar/src/db/db.go
+  
 - Finalmente para crear las tablas correspondientes en la BD y ejecutar manualmente el Job correr los siguientes request: <br />
 - [localhost:9990/crear_esquema](9990/crear_esquema) <br />
 - [localhost:9990/mover_galaxia](9990/mover_galaxia) <br />
