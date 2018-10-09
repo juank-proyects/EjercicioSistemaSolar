@@ -17,7 +17,7 @@ func Start() {
 	router.GET("/periodos_sequia", periodosSequia)
 	router.GET("/periodos_despejado", periodosDespejado)
 	router.GET("/crear_esquema", crearEsquema)
-	router.Run(":9990")
+	router.Run(":8080")
 }
 
 func clima(c *gin.Context) {
