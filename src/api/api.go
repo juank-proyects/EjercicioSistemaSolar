@@ -7,14 +7,16 @@ import (
 	"github.com/juank-proyects/EjercicioSistemaSolar/src/models"
 )
 
+//Start levamta el servicio Api
 func Start() {
-
 	router := gin.Default()
 	router.GET("/clima", clima)
-	router.GET("/mover_galaxia", moverGalaxia)
+	router.GET("/mover_galaxia", ejecutarMoverGalaxia)
 	router.GET("/periodos_de_lluvia", periodosDeLluvia)
-	router.Run(":9990")
-
+	router.GET("/periodos_optimos", periodosOptimos)
+	router.GET("/periodos_sequia", periodosSequia)
+	router.GET("/periodos_despejado", periodosDespejado)
+	router.Run(":9000")
 }
 
 func clima(c *gin.Context) {
@@ -51,7 +53,7 @@ func moverGalaxia(c *gin.Context) {
 	return
 }
 
-func moverGalaxia(c *gin.Context) {
+func ejecutarMoverGalaxia(c *gin.Context) {
 	var galaxia models.Galaxia
 	galaxia = galaxia.Iniciar()
 	res := galaxia.MoverGalaxia()
@@ -64,10 +66,42 @@ func moverGalaxia(c *gin.Context) {
 func periodosDeLluvia(c *gin.Context) {
 	var periodo models.Periodo
 	cantidad, err := periodo.CantidadPeriodosClima("Lluvia")
+	if err != nil {
+		c.String(400, "400-Bad-Request")
+		return
+	}
 	dia, err := periodo.PicoMaximoLluvia()
 	c.JSON(200, gin.H{
 		"cantidad":    cantidad,
 		"pico_maximo": dia,
+	})
+	return
+}
+
+func periodosOptimos(c *gin.Context) {
+	periodosClima(c, "Optimo")
+	return
+}
+
+func periodosSequia(c *gin.Context) {
+	periodosClima(c, "Sequia")
+	return
+}
+
+func periodosDespejado(c *gin.Context) {
+	periodosClima(c, "Despejado")
+	return
+}
+
+func periodosClima(c *gin.Context, clima string) {
+	var periodo models.Periodo
+	cantidad, err := periodo.CantidadPeriodosClima(clima)
+	if err != nil {
+		c.String(400, "400-Bad-Request")
+		return
+	}
+	c.JSON(200, gin.H{
+		"cantidad": cantidad,
 	})
 	return
 }

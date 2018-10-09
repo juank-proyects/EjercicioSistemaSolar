@@ -8,11 +8,12 @@ import (
 
 //Periodo es la estructura de un periodo de tiempo
 type Periodo struct {
-	tableName struct{} `sql:"periodo"`
-	Id        int      `sql:",pk"`
+	tableName struct{} `sql:"periodos"`
+	ID        int      `sql:",pk"`
 	Inicio    int      `sql:"inicio"`
 	Fin       int
 	Pico      int
+	Perimetro float32
 	Clima     string
 }
 
@@ -33,7 +34,7 @@ func (p Periodo) Guardar() string {
 	}
 }
 
-//Se guardar un periodo
+//ObtenerPeriodo obtiene el perido para el dia X
 func (p Periodo) ObtenerPeriodo(dia int) Periodo {
 	db := db.Connect()
 	defer db.Close()
@@ -47,7 +48,7 @@ func (p Periodo) ObtenerPeriodo(dia int) Periodo {
 	return p
 }
 
-//Se guardar un periodo
+//CantidadPeriodos retorna la cantidad de periodos
 func (p Periodo) CantidadPeriodos() (int, error) {
 	db := db.Connect()
 	defer db.Close()
@@ -58,10 +59,11 @@ func (p Periodo) CantidadPeriodos() (int, error) {
 	return count, nil
 }
 
+//EliminarPeriodos Elimina todos los periodos en la BD
 func (p Periodo) EliminarPeriodos() int {
 	db := db.Connect()
 	defer db.Close()
-	query := "DELETE FROM periodo"
+	query := "DELETE FROM periodos"
 	res, err := db.Exec(query)
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
@@ -70,6 +72,7 @@ func (p Periodo) EliminarPeriodos() int {
 	return res.RowsAffected()
 }
 
+//CantidadPeriodosClima retorna la cantidad de periodos para determinado clima
 func (p Periodo) CantidadPeriodosClima(clima string) (int, error) {
 	db := db.Connect()
 	defer db.Close()
@@ -82,6 +85,7 @@ func (p Periodo) CantidadPeriodosClima(clima string) (int, error) {
 	return cantidad, nil
 }
 
+//PicoMaximoLluvia retorna el dia del pico maximo de lluvia
 func (p Periodo) PicoMaximoLluvia() (int, error) {
 	db := db.Connect()
 	defer db.Close()
